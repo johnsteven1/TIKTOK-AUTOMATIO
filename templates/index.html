@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ef233c">
+<title>TikTok Workflow Desk</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">◎</div><div><strong>Creator Desk</strong><small>TIKTOK WORKFLOW</small></div></div>
+    <nav id="nav">
+      <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+      <button class="nav-item" data-view="browser"><span>▣</span> TikTok browser</button>
+      <button class="nav-item" data-view="queue"><span>☷</span> Username queue</button>
+      <button class="nav-item" data-view="comments"><span>✎</span> Comment templates</button>
+      <button class="nav-item" data-view="messages"><span>✉</span> Message templates</button>
+      <button class="nav-item" data-view="activity"><span>◷</span> Activity history</button>
+      <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+    </nav>
+    <div class="sidebar-note"><span class="status-dot"></span><div><b>Local workspace</b><small>Your data stays on this device</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><p class="eyebrow">WORKSPACE / TIKTOK</p><h1 id="pageTitle">Overview</h1><p class="sub" id="pageSubtitle">Manage profile reviews and outreach drafts.</p></div><a class="primary-btn" href="https://www.tiktok.com/" target="_blank" rel="noopener">Open browser ↗</a></header>
+    <section class="view active" id="view-overview">
+      <div class="notice"><span class="notice-icon">ⓘ</span><div><b>Review-first workflow</b><p>Start on Google, then search for TikTok and sign in yourself. The private browser profile is saved locally. Engagement actions are review-first and require your manual confirmation; bulk likes, comments, and DMs are not sent automatically.</p></div></div>
+      <div class="stats">
+        <article class="stat-card"><span class="stat-label">TOTAL PROFILES</span><strong id="statTotal">0</strong><small>In your queue</small></article>
+        <article class="stat-card"><span class="stat-label">PENDING</span><strong id="statPending">0</strong><small>Awaiting review</small></article>
+        <article class="stat-card"><span class="stat-label">COMPLETED</span><strong id="statDone">0</strong><small>Marked by you</small></article>
+        <article class="stat-card"><span class="stat-label">TEMPLATES</span><strong id="statTemplates">0</strong><small>Comments + messages</small></article>
+      </div>
+      <div class="grid-two">
+        <article class="panel"><div class="panel-head"><div><h2>Quick add usernames</h2><p>Paste one username per line.</p></div><span class="pill">QUEUE</span></div><textarea id="quickUsernames" rows="5" placeholder="@creator_one&#10;creator_two&#10;creator_three"></textarea><div class="row-end"><span class="muted">Duplicates are skipped</span><button class="primary-btn" id="quickAdd">Add profiles</button></div></article>
+        <article class="panel"><div class="panel-head"><div><h2>Live workflow view</h2><p>Current profile and review progress.</p></div><span class="live-label"><i></i> LOCAL</span></div><div class="preview"><div class="preview-top"><span>●</span><span>WORKFLOW PREVIEW</span><span>•••</span></div><div class="preview-center"><div class="preview-icon">◎</div><strong id="previewName">No profile selected</strong><p id="previewStatus">Add usernames to begin reviewing.</p><button class="secondary-btn" id="openNext">Open next profile ↗</button></div><div class="preview-bottom"><span>Queue status</span><b id="previewCount">0 pending</b></div></div><p class="helper">Use TikTok browser for the actual screen. Sign in on TikTok itself; your session stays in this local browser profile.</p><button class="secondary-btn" data-goto="browser">Open live browser →</button></article>
+      </div>
+      <article class="panel"><div class="panel-head"><div><h2>Recent activity</h2><p>Latest updates from this workspace.</p></div><button class="text-btn" data-goto="activity">View all →</button></div><div id="recentLogs" class="log-list"><div class="empty">No activity yet.</div></div></article>
+    </section>
+
+    <section class="view" id="view-browser">
+      <article class="panel browser-panel">
+        <div class="panel-head"><div><h2>TikTok live browser</h2><p>Sign in directly on TikTok. Your browser profile is saved locally for future sessions.</p></div><span class="pill" id="browserBadge">NOT CONNECTED</span></div>
+        <div class="browser-toolbar"><div class="browser-address"><span>🔒</span><span id="browserUrl">TikTok browser not started</span></div><button class="primary-btn" id="startBrowser">Open Google</button><button class="secondary-btn" id="stopBrowser">Stop</button></div>
+        <div class="browser-screen-wrap" id="browserScreenWrap">
+          <div class="browser-placeholder" id="browserPlaceholder"><div class="preview-icon">▣</div><strong>Your live TikTok screen appears here</strong><p>Start the browser to open Google. Search for TikTok and sign in manually.</p></div>
+          <img id="browserScreen" alt="Live view of the TikTok browser" draggable="false" hidden>
+        </div>
+        <div class="browser-controls"><div class="browser-control-row"><label for="browserText">Type into focused field</label><input id="browserText" type="text" maxlength="2000" placeholder="Text is sent to TikTok browser only"><button class="secondary-btn" id="typeBrowserText">Type</button></div>
+          <div class="browser-control-row key-row"><span>Keyboard</span><button class="small-btn" data-key="Tab">Tab</button><button class="small-btn" data-key="Enter">Enter</button><button class="small-btn" data-key="Backspace">⌫</button><button class="small-btn" data-key="Escape">Esc</button><button class="small-btn" data-key="Space">Space</button><button class="secondary-btn" id="refreshBrowser">Refresh view</button></div>
+        </div>
+        <p class="helper">Tap or click the live screen to interact. Passwords and typed text are not saved to the dashboard or activity log. TikTok session data is stored in <code>data/browser-profile</code>; keep this folder private and do not expose this dashboard to the public internet. Do not share or export session cookies.</p>
+        <div class="divider"></div><h3>Open a queued profile</h3><div class="browser-control-row"><input id="browserUsername" type="text" maxlength="24" placeholder="TikTok username"><button class="primary-btn" id="navigateBrowser">Open profile</button></div>
+        <p class="helper">Use the independent action controls below to run one action at a time on the currently open post or conversation. Keep your session private and use only relevant, wanted interactions.</p>
+        <div id="browserFeedback" class="feedback" aria-live="polite"></div>
+        <div class="divider"></div>
+        <h3>Engagement action controls</h3>
+        <p class="helper">Enable only the action types you want. Actions run on the currently open post or conversation when you tap the matching button; there is no queue-wide or background sending.</p>
+        <div class="action-settings">
+          <label class="action-option"><span><b>Like posts</b><small>Like the currently open post</small></span><input type="checkbox" id="likeEnabled"></label>
+          <label class="action-option"><span><b>Post comments</b><small>Submit the text to the current post</small></span><input type="checkbox" id="commentEnabled"></label>
+          <label class="action-option"><span><b>Direct messages</b><small>Send the text in the current conversation</small></span><input type="checkbox" id="messageEnabled"></label>
+          <div class="action-config"><label for="actionDelay">Minimum action delay (seconds)</label><input id="actionDelay" type="number" min="2" max="120" value="5"><label for="actionLimit">Session action limit</label><input id="actionLimit" type="number" min="1" max="25" value="5"></div>
+          <button class="secondary-btn" id="saveActionPrefs">Save action preferences</button>
+          <span class="pill" id="actionStatus">ACTIONS DISABLED</span>
+        </div>
+        <div class="divider"></div>
+        <h3>Run an action</h3>
+        <p class="helper">Open one TikTok post or the intended conversation first. Tap an action once to run it without a second confirmation. Comments and messages are submitted automatically when a clear, enabled Post or Send button is detected. Actions are limited to the current page, with a five-second server-side minimum interval and a 25-action process cap.</p>
+        <label class="field-label" for="actionText">Comment or message text</label>
+        <textarea id="actionText" rows="3" maxlength="1000" placeholder="Write or paste a relevant message/comment…"></textarea>
+        <div class="assisted-actions">
+          <button class="primary-btn" id="runLike" type="button">Like current post</button>
+          <button class="secondary-btn" id="prepareComment" type="button">Post comment</button>
+          <button class="secondary-btn" id="prepareMessage" type="button">Send direct message</button>
+        </div>
+        <div id="actionFeedback" class="feedback" aria-live="polite">Ready. No actions have run.</div>
+      </article>
+    </section>
+    <section class="view" id="view-queue">
+      <article class="panel"><div class="panel-head"><div><h2>Username queue</h2><p>Track profiles, drafts, and review status.</p></div><span class="pill" id="queueCount">0 PROFILES</span></div><label class="field-label" for="bulkUsernames">Add usernames</label><textarea id="bulkUsernames" rows="5" placeholder="@username_one&#10;username_two"></textarea><div class="row-end"><span class="muted">Letters, numbers, dots and underscores</span><button class="primary-btn" id="addProfiles">Add to queue</button></div><div id="queueFeedback" class="feedback" aria-live="polite"></div><div class="table-wrap"><table><thead><tr><th>Username</th><th>Status</th><th>Drafts</th><th>Actions</th></tr></thead><tbody id="profileRows"><tr><td colspan="4" class="empty">Your queue is empty.</td></tr></tbody></table></div></article>
+    </section>
+    <section class="view" id="view-comments">
+      <article class="panel"><div class="panel-head"><div><h2>Comment templates</h2><p>Keep comments relevant to the content you review.</p></div><span class="pill">ROTATION</span></div><label class="field-label" for="commentsInput">One template per line</label><textarea id="commentsInput" rows="8"></textarea><div class="template-footer"><div><label class="field-label" for="rotationComments">Switch template after</label><div class="inline-input"><input id="rotationComments" type="number" min="1" max="100" value="4"><span>uses</span></div></div><button class="primary-btn" id="saveComments">Save templates</button></div><div class="template-test"><div><b>Rotation preview</b><p id="commentPreview">Save templates to preview rotation.</p></div><button class="secondary-btn" id="previewComment">Preview next</button></div></article>
+    </section>
+    <section class="view" id="view-messages">
+      <article class="panel"><div class="panel-head"><div><h2>Direct message drafts</h2><p>Use only for appropriate, wanted outreach; review before sending.</p></div><span class="pill">DRAFTS</span></div><label class="field-label" for="messagesInput">One message per line</label><textarea id="messagesInput" rows="8"></textarea><div class="template-footer"><div><label class="field-label" for="rotationMessages">Switch template after</label><div class="inline-input"><input id="rotationMessages" type="number" min="1" max="100" value="4"><span>uses</span></div></div><button class="primary-btn" id="saveMessages">Save templates</button></div><div class="template-test"><div><b>Rotation preview</b><p id="messagePreview">Save templates to preview rotation.</p></div><button class="secondary-btn" id="previewMessage">Preview next</button></div></article>
+    </section>
+    <section class="view" id="view-activity">
+      <article class="panel"><div class="panel-head"><div><h2>Activity history</h2><p>Local audit trail of queue and template changes.</p></div><button class="secondary-btn" id="refreshLogs">Refresh</button></div><div id="allLogs" class="log-list"><div class="empty">No activity yet.</div></div></article>
+    </section>
+    <section class="view" id="view-settings">
+      <article class="panel settings-panel"><div class="panel-head"><div><h2>Workspace settings</h2><p>Configure the template rotation behavior.</p></div></div><label class="field-label" for="rotationSetting">Rotate template after</label><div class="inline-input wide"><input id="rotationSetting" type="number" min="1" max="100" value="4"><span>uses per template</span></div><p class="helper">Example: 4 means the preview uses one template four times, then advances to the next. This only manages draft selection; it does not send anything.</p><button class="primary-btn" id="saveSettings">Save settings</button><div class="divider"></div><h3>Data management</h3><p class="helper">The queue, templates, and activity log are stored in the local <code>data/state.json</code> file.</p><button class="danger-btn" id="resetData">Reset workspace data</button></article>
+    </section>
+    <footer>Creator Desk · Local workflow tool · Keep outreach respectful and compliant.</footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/static/app.js"></script>
+</body></html>

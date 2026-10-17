@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: tiktok-workflow-desk
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: DASHBOARD_USERNAME
+        value: admin
+      - key: DASHBOARD_PASSWORD
+        sync: false
+    disk:
+      name: tiktok-workflow-data
+      mountPath: /var/data
+      sizeGB: 1
